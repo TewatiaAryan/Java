@@ -26,6 +26,75 @@ public class _2048{
         int[] array2=Zero.get(n1);
         main[array2[0]][array2[1]]=value[rnd1.nextInt(2)];
     }
+    public static int check_game(int size, int[][] main){
+        int k=0;
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++)
+                if(main[i][j]==0)
+                    return 1;
+        }
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                int a=i,b=j;
+                int[] arr2=new int[5];
+                arr2[0]=main[i][j];
+                // Corner Elements
+                if(a==0 && b==0){
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                else if(a==size-1 && b==0){
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[3]=main[a-1][b];             //Up
+                }
+                else if(a==size-1 && b==size-1){
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[3]=main[a-1][b];             //Up
+                }
+                else if(a==0 && b==size-1){
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                //Edges Mid Elements
+                else if(a==0 && b<size-1 && b!=0){
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                else if(b==0 && a!=0 && a<size-1){
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[3]=main[a-1][b];             //Up
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                else if(a==size-1 && b!=0 && b<size-1){
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[3]=main[a-1][b];             //Up
+                }
+                else if(b==size-1 && a<size-1 && a!=0){
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[3]=main[a-1][b];             //Up
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                //Centralized Elements
+                else{
+                    arr2[1] = main[a][b-1];           // Left
+                    arr2[2]=main[a][b+1];             //Right
+                    arr2[3]=main[a-1][b];             //Up
+                    arr2[4]=main[a+1][b];             //Down
+                }
+                int m=0;
+                for(int n=1;n<5;n++)
+                    if(arr2[n]!=arr2[0])
+                        m+=1;
+                if(m==4)
+                    k+=1;
+            }
+        }
+        if(k==Math.pow(size,2))
+            return 2;
+        return 0;
+    }
     public static void Right(Random rnd1,int[] value,int size,int[][] main){
         for(int i=0;i<size;i++){
             ArrayList<Integer> Line= new ArrayList<>();
@@ -119,6 +188,7 @@ public class _2048{
         Random rnd1=new Random();
         System.out.print("Enter the size of the Grid : ");
         int size=sc.nextInt();
+        int k=0;
         int max = (int) Math.pow(size, 2);
         int[] value={2,4};
         int[][] main=new int[size][size];
@@ -128,6 +198,10 @@ public class _2048{
         System.out.println("\nGIVE INSTRUCTIONS : ");
         System.out.println("Press R for RIGHT movement \nPress L for LEFT movement \nPress U for UP movement \nPress D for DOWN movement \n");
         while(true){
+            if(check_game(size,main)==2){
+                System.out.println("GAME OVER !!!");
+                break;
+            }
             String str=sc.next();
             if(str.equalsIgnoreCase("R"))
                 Right(rnd1,value,size,main);
