@@ -95,77 +95,135 @@ public class _2048{
             return 2;
         return 0;
     }
-    public static void Right(Random rnd1,int[] value,int size,int[][] main){
-        for(int i=0;i<size;i++){
-            ArrayList<Integer> Line= new ArrayList<>();
-            for(int j=size-1;j>=0;j--)
-                if(main[i][j]!=0)
-                    Line.add(main[i][j]);
-            add(Line);
-            int z=0;
-            for(int j=size-1;j>=0;j--){
-                if(z<Line.size())
-                    main[i][j]=Line.get(z++);
-                else
-                    main[i][j]=0;
+    public static void Right(Random rnd1,int[] value,int size,int[][] main,int h,int v){
+        int f=0;
+        if(v>h-2){
+            for(int i=0;i<size;i++) {
+                for (int j = 0; j < size - 1; j++){
+                    while(main[i][j]==0 && j<size-2)
+                        j++;
+                    if (main[i][j] != main[i][j + 1])
+                        f += 1;
+                }
             }
         }
-        give_value(rnd1, size, value, main, 1);
-        print(size,main);
-    }
-    public static void Down(Random rnd1,int[] value,int size,int[][] main){
-        for(int j=0;j<size;j++){
-            ArrayList<Integer> Line= new ArrayList<>();
-            for(int i=size-1;i>=0;i--)
-                if(main[i][j]!=0)
-                    Line.add(main[i][j]);
-            add(Line);
-            int z=0;
-            for(int i=size-1;i>=0;i--){
-                if(z<Line.size())
-                    main[i][j]=Line.get(z++);
-                else
-                    main[i][j]=0;
-            }
-        }
-        give_value(rnd1, size, value, main, 1);
-        print(size,main);
-    }
-    public static void Left(Random rnd1,int[] value,int size,int[][] main){
-        for(int i=0;i<size;i++){
-            ArrayList<Integer> Line= new ArrayList<>();
-            for(int j=0;j<size;j++)
-                if(main[i][j]!=0)
-                    Line.add(main[i][j]);
-            add(Line);
-            int z=0;
-            for(int j=0;j<size;j++){
-                if(z<Line.size())
-                    main[i][j]=Line.get(z++);
-                else
-                    main[i][j]=0;
-            }
-        }
-        give_value(rnd1, size, value, main, 1);
-        print(size,main);
-    }
-    public static void Up(Random rnd1,int[] value,int size,int[][] main){
-        for(int j=0;j<size;j++){
-            ArrayList<Integer> Line= new ArrayList<>();
-            for(int i=0;i<size;i++)
-                if(main[i][j]!=0)
-                    Line.add(main[i][j]);
-            add(Line);
-            int z=0;
+        if(f!=size*(size-1)){
             for(int i=0;i<size;i++){
-                if(z<Line.size())
-                    main[i][j]=Line.get(z++);
-                else
-                    main[i][j]=0;
+                ArrayList<Integer> Line= new ArrayList<>();
+                for(int j=size-1;j>=0;j--)
+                    if(main[i][j]!=0)
+                        Line.add(main[i][j]);
+                add(Line);
+                int z=0;
+                for(int j=size-1;j>=0;j--){
+                    if(z<Line.size())
+                        main[i][j]=Line.get(z++);
+                    else
+                        main[i][j]=0;
+                }
+            }
+            give_value(rnd1, size, value, main, 1);
+            print(size,main);
+        }
+        else
+            System.out.println("NOT POSSIBLE , TRY ANOTHER DIRECTION !!");
+    }
+    public static void Down(Random rnd1,int[] value,int size,int[][] main,int h,int v){
+        int f=0;
+        if(v>h-2) {
+            for (int i = 0; i < size - 1; i++) {
+                for (int j = 0; j < size; j++) {
+                    while (main[i][j] == 0 && i < size - 2)
+                        i++;
+                    if (main[i][j] != main[i + 1][j])
+                        f += 1;
+                }
             }
         }
-        give_value(rnd1, size, value, main, 1);
-        print(size,main);
+        if(f!=size*(size-1)) {
+            for (int j = 0; j < size; j++) {
+                ArrayList<Integer> Line = new ArrayList<>();
+                for (int i = size - 1; i >= 0; i--)
+                    if (main[i][j] != 0)
+                        Line.add(main[i][j]);
+                add(Line);
+                int z = 0;
+                for (int i = size - 1; i >= 0; i--) {
+                    if (z < Line.size())
+                        main[i][j] = Line.get(z++);
+                    else
+                        main[i][j] = 0;
+                }
+            }
+            give_value(rnd1, size, value, main, 1);
+            print(size, main);
+        }
+        else
+            System.out.println("NOT POSSIBLE , TRY ANOTHER DIRECTION !!");
+    }
+    public static void Left(Random rnd1,int[] value,int size,int[][] main,int h,int v){
+        int f=0;
+        if(v>h-2) {
+            for (int i = 0; i < size; i++) {
+                for (int j = size - 1; j > 0; j--) {
+                    while (main[i][j] == 0 && j > 1)
+                        j--;
+                    if (main[i][j] != main[i][j - 1])
+                        f += 1;
+                }
+            }
+        }
+        if(f!=size*(size-1)){
+            for (int i = 0; i < size; i++) {
+                ArrayList<Integer> Line = new ArrayList<>();
+                for (int j = 0; j < size; j++)
+                    if (main[i][j] != 0)
+                        Line.add(main[i][j]);
+                add(Line);
+                int z = 0;
+                for (int j = 0; j < size; j++) {
+                    if (z < Line.size())
+                        main[i][j] = Line.get(z++);
+                    else
+                        main[i][j] = 0;
+                }
+            }
+            give_value(rnd1, size, value, main, 1);
+            print(size, main);
+        }
+        else
+            System.out.println("NOT POSSIBLE , TRY ANOTHER DIRECTION !!");
+    }
+    public static void Up(Random rnd1,int[] value,int size,int[][] main,int h,int v){
+        int f=0;
+        if(v>h-2) {
+            for (int i = size - 1; i > 0; i--) {
+                for (int j = 0; j < size; j++) {
+                    while (main[i][j] == 0 && i > 1)
+                        i--;
+                    if (main[i][j] != main[i - 1][j])
+                        f += 1;
+                }
+            }
+        }
+        if(f!=size*(size-1)) {
+            for (int j = 0; j < size; j++) {
+                ArrayList<Integer> Line = new ArrayList<>();
+                for (int i = 0; i < size; i++)
+                    if (main[i][j] != 0)
+                        Line.add(main[i][j]);
+                add(Line);
+                int z = 0;
+                for (int i = 0; i < size; i++) {
+                    if (z < Line.size())
+                        main[i][j] = Line.get(z++);
+                    else
+                        main[i][j] = 0;
+                }
+            }
+            give_value(rnd1, size, value, main, 1);
+            print(size, main);
+        }
     }
     public static void add(ArrayList<Integer> Line){
         for(int k=0;k<Line.size();k++)
@@ -188,8 +246,7 @@ public class _2048{
         Random rnd1=new Random();
         System.out.print("Enter the size of the Grid : ");
         int size=sc.nextInt();
-        int k=0;
-        int max = (int) Math.pow(size, 2);
+        int h= (int) Math.pow(size,2);
         int[] value={2,4};
         int[][] main=new int[size][size];
         give_value(rnd1, size, value, main, 2);
@@ -197,6 +254,7 @@ public class _2048{
         print(size,main);
         System.out.println("\nGIVE INSTRUCTIONS : ");
         System.out.println("Press R for RIGHT movement \nPress L for LEFT movement \nPress U for UP movement \nPress D for DOWN movement \n");
+        int v=0;
         while(true){
             if(check_game(size,main)==2){
                 System.out.println("GAME OVER !!!");
@@ -204,23 +262,25 @@ public class _2048{
             }
             String str=sc.next();
             if(str.equalsIgnoreCase("R"))
-                Right(rnd1,value,size,main);
+                Right(rnd1,value,size,main,h,v);
             else if(str.equalsIgnoreCase("L"))
-                Left(rnd1,value,size,main);
+                Left(rnd1,value,size,main,h,v);
             else if(str.equalsIgnoreCase("U"))
-                Up(rnd1,value,size,main);
+                Up(rnd1,value,size,main,h,v);
             else if(str.equalsIgnoreCase("D"))
-                Down(rnd1,value,size,main);
+                Down(rnd1,value,size,main,h,v);
             else
                 System.out.println("INVALID INPUT !!");
             int q=0;
-            for(int i=0;i<size;i++){
-                for(int j=0;j<size;j++){
-                    if(main[i][j]==2048){
-                        System.out.println("Press 1 to end game \n Press 2 to continue\n");
-                        q=sc.nextInt();
-                        break;
-                    }
+            v++;
+            if(v>512){
+                for(int i=0;i<size;i++){
+                    for(int j=0;j<size;j++)
+                        if(main[i][j]==2048){
+                            System.out.println("YOU WON !! \nPress 1 to end game \n Press 2 to continue\n");
+                            q=sc.nextInt();
+                            break;
+                        }
                 }
             }
             if(q==1)
